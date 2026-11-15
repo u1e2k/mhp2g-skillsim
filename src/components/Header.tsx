@@ -1,9 +1,10 @@
 import React from 'react';
-import { Sparkles, RotateCcw, Share2, Star } from 'lucide-react';
+import { RotateCcw, Share2, Star, Award, BookOpen } from 'lucide-react';
 
 interface HeaderProps {
   onReset: () => void;
-  onOpenPresets: () => void;
+  onOpenTemplates: () => void;
+  onOpenProgressionGuide: () => void;
   onOpenFavorites: () => void;
   onShareUrl: () => void;
   favoriteCount: number;
@@ -11,7 +12,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onReset,
-  onOpenPresets,
+  onOpenTemplates,
+  onOpenProgressionGuide,
   onOpenFavorites,
   onShareUrl,
   favoriteCount,
@@ -38,11 +40,33 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Progression Guide Button */}
+          <button
+            onClick={onOpenProgressionGuide}
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 text-xs font-medium border border-blue-500/30 transition-colors"
+            title="武器別ストーリー攻略おすすめ防具チャート"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+            <span className="hidden md:inline">ストーリー攻略防具</span>
+            <span className="md:hidden">攻略</span>
+          </button>
+
+          {/* Templates Button */}
+          <button
+            onClick={onOpenTemplates}
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 text-xs font-medium border border-purple-500/30 transition-colors"
+            title="攻略サイトの名作テンプレ防具一覧"
+          >
+            <Award className="w-3.5 h-3.5 text-purple-400" />
+            <span className="hidden md:inline">おすすめテンプレ</span>
+            <span className="md:hidden">テンプレ</span>
+          </button>
+
           {/* Favorites Button */}
           <button
             onClick={onOpenFavorites}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-amber-300 text-xs font-medium border border-[#30363d] transition-colors relative"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-amber-300 text-xs font-medium border border-[#30363d] transition-colors relative"
             title="お気に入り装備一覧"
           >
             <Star className={`w-3.5 h-3.5 ${favoriteCount > 0 ? 'fill-amber-400 text-amber-400' : 'text-gray-400'}`} />
@@ -54,20 +78,10 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Presets Button */}
-          <button
-            onClick={onOpenPresets}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-medium border border-amber-500/30 transition-colors"
-            title="定番テンプレ構成"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">定番テンプレ</span>
-          </button>
-
           {/* Share URL Button */}
           <button
             onClick={onShareUrl}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-gray-200 text-xs font-medium border border-[#30363d] transition-colors"
+            className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-gray-200 text-xs font-medium border border-[#30363d] transition-colors"
             title="構成URLをコピー"
           >
             <Share2 className="w-3.5 h-3.5 text-blue-400" />

@@ -6,6 +6,7 @@ import { ArrowUpDown, AlertCircle, Info } from 'lucide-react';
 interface SearchResultsProps {
   hasSearched: boolean;
   solutions: SimSolution[];
+  hunterType?: 'blade' | 'gunner';
   simDuration: number | null;
   totalChecked: number | null;
   sortBy: 'defense' | 'slots';
@@ -18,6 +19,7 @@ interface SearchResultsProps {
 export const SearchResults: React.FC<SearchResultsProps> = ({
   hasSearched,
   solutions,
+  hunterType = 'blade',
   simDuration,
   totalChecked,
   sortBy,
@@ -84,6 +86,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               key={i}
               solution={sol}
               index={i}
+              hunterType={hunterType}
               isFavorited={isFavorited(sol)}
               onToggleFavorite={() => onToggleFavorite(sol)}
             />

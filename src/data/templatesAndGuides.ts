@@ -1,0 +1,543 @@
+import type { Rank, ArmorPart } from '../types';
+
+export interface TemplateArmorSet {
+  id: string;
+  name: string;
+  tagline: string;
+  hunterType: 'blade' | 'gunner';
+  rank: Rank;
+  recommendedWeapon: string;
+  armors: Record<ArmorPart, string>;
+  skills: string[];
+  targetSkills: Record<string, number>;
+  description: string;
+}
+
+export const TEMPLATE_ARMOR_SETS: TemplateArmorSet[] = [
+  {
+    id: 'kaiser_arti_gs',
+    name: 'カイザーX抜刀アーティテンプレ',
+    tagline: 'MHP2G大剣の頂点。会心100%溜め3で全てを薙ぎ払う完成形',
+    hunterType: 'blade',
+    rank: 'G級',
+    recommendedWeapon: '角王剣アーティラート',
+    armors: {
+      head: 'カイザーXクラウン',
+      body: 'カイザーXメイル',
+      arm: 'カイザーXアーム',
+      waist: 'カイザーXフォールド',
+      leg: 'キリンXブーツ',
+    },
+    skills: ['抜刀術', '集中', '斬れ味レベル+1', '見切り+1'],
+    targetSkills: { '抜刀': 10, '溜め短縮': 10, '匠': 10 },
+    description: 'マイナス会心を持つ最高威力の大剣アーティラートを、抜刀術で確定会心に昇華。集中による高速溜め3と紫ゲージで圧倒的火力を実現します。',
+  },
+  {
+    id: 'gizami_z_master',
+    name: 'ギザミZ汎用剣士（匠・業物・見切り）',
+    tagline: '近接武器全般で終盤まで戦える、切れ味維持の最高峰',
+    hunterType: 'blade',
+    rank: 'G級',
+    recommendedWeapon: 'ラストタキオン / 双影剣G / マグニチュード',
+    armors: {
+      head: 'ギザミZヘルム',
+      body: 'ギザミZメイル',
+      arm: 'ギザミZアーム',
+      waist: 'ギザミZフォールド',
+      leg: 'ギザミZグリーヴ',
+    },
+    skills: ['斬れ味レベル+1', '業物', '見切り+1', '砥石使用高速化'],
+    targetSkills: { '匠': 10, '斬れ味': 10, '達人': 10 },
+    description: '紫ゲージを伸ばす「匠」と消耗を半減する「業物」を両立。太刀や双剣など手数の多い武器種にとってのG級標準装備です。',
+  },
+  {
+    id: 'narga_x_evade',
+    name: 'ナルガX回避テンプレ',
+    tagline: 'フレーム回避と長距離ステップで無敵の機動力を得る万能装備',
+    hunterType: 'blade',
+    rank: 'G級',
+    recommendedWeapon: '暗黒槍【暗夜】 / 夜刀【月影】',
+    armors: {
+      head: 'ナルガXヘルム',
+      body: 'ナルガXメイル',
+      arm: 'ナルガXアーム',
+      waist: 'ナルガXフォールド',
+      leg: 'ナルガXグリーヴ',
+    },
+    skills: ['回避性能+2', '回避距離UP', '攻撃力UP【小】'],
+    targetSkills: { '回避性能': 15, '回避距離': 10 },
+    description: '回避の無敵時間を大幅に延長し、移動距離も拡大。ランスのバックステップや、咆哮・震動のフレーム回避が驚くほど簡単になります。',
+  },
+  {
+    id: 'konjiki_shin_gs',
+    name: '金色・真 大剣・ハンマーテンプレ',
+    tagline: '激昂ラージャン素材から作られる高火力・重撃セット',
+    hunterType: 'blade',
+    rank: 'G級',
+    recommendedWeapon: '角王剣アーティラート / カオスオーダー',
+    armors: {
+      head: '金色ノ添髪・真',
+      body: '金色ノ羽織・真',
+      arm: '金色ノ篭手・真',
+      waist: '金色ノ帯・真',
+      leg: '金色ノ袴・真',
+    },
+    skills: ['集中', '抜刀術', '斬れ味レベル+1', '挑発'],
+    targetSkills: { '溜め短縮': 10, '抜刀': 10, '匠': 10 },
+    description: '一式揃えるだけで大剣に必要な3大スキル（集中・抜刀・匠）がほぼ完成する超有名セット。ラージャンG級の登竜門。',
+  },
+  {
+    id: 'lava_x_guts',
+    name: 'ラヴァX根性集中テンプレ',
+    tagline: '即死攻撃を防ぐ「根性」と「集中」でG級の難所を突破',
+    hunterType: 'blade',
+    rank: 'G級',
+    recommendedWeapon: '大剣全般 / 弓全般',
+    armors: {
+      head: 'ラヴァXヘルム',
+      body: 'ラヴァXメイル',
+      arm: 'ラヴァXアーム',
+      waist: 'ラヴァXフォールド',
+      leg: 'ラヴァXグリーヴ',
+    },
+    skills: ['根性', '集中', '地形ダメージ無効', '抜刀術'],
+    targetSkills: { '根性': 10, '溜め短縮': 10 },
+    description: 'ウカムルバスやミラ系など、一撃死の危険があるG級後半の強敵相手に絶大な生存力を発揮する防御＋攻撃ハイブリッド。',
+  },
+  {
+    id: 'laoshan_reload_hb',
+    name: '老山龍砲・極 自動装填ラツマツヘビィ',
+    tagline: 'リロード不要で属性弾・通常弾を無反動乱射する伝説のハメ銃',
+    hunterType: 'gunner',
+    rank: 'G級',
+    recommendedWeapon: '老山龍砲・極',
+    armors: {
+      head: 'キリンXホーン',
+      body: 'ナルガXレジスト',
+      arm: '忍の篭手・天',
+      waist: 'フルフルZコート',
+      leg: 'オウビートXフェムル',
+    },
+    skills: ['自動装填', '通常弾・連射矢威力UP', '属性攻撃強化', '回避距離UP'],
+    targetSkills: { '自動装填': 10, '通常弾強化': 10, '属性攻撃': 10 },
+    description: 'MHP2Gを代表する超強力戦術。リロードアクションを完全に撤廃し、属性弾と通常弾を圧倒的なDPSで撃ち続けます。',
+  },
+  {
+    id: 'yoruho_pierce_hb',
+    name: '夜砲【黒風】貫通ヘビィテンプレ',
+    tagline: '大型・古龍を秒殺する、貫通弾特化のクリティカルマシンガン',
+    hunterType: 'gunner',
+    rank: 'G級',
+    recommendedWeapon: '夜砲【黒風】',
+    armors: {
+      head: 'ギザミZキャップ',
+      body: 'レウスXレジスト',
+      arm: 'ギザミZガード',
+      waist: 'ギザミZコート',
+      leg: 'ギザミZレギンス',
+    },
+    skills: ['貫通弾・貫通矢威力UP', '最大数弾生産', '見切り+2', '攻撃力UP【小】'],
+    targetSkills: { '貫通弾強化': 10, '弾調合': 10, '達人': 10 },
+    description: '素の会心40%に貫通弾強化と弾調合を合わせ、巨体モンスターを頭から尻尾まで削り倒す貫通ヘビィの理想形。',
+  },
+  {
+    id: 'abubu_rapid_lb',
+    name: '阿武祖龍弩 全属性速射ライト',
+    tagline: '火水雷氷の全属性弾を3連速射。大連続狩猟を1挺で完全制覇',
+    hunterType: 'gunner',
+    rank: 'G級',
+    recommendedWeapon: '阿武祖龍弩',
+    armors: {
+      head: 'キリンXホーン',
+      body: 'キリンXケープ',
+      arm: 'キリンXグローブ',
+      waist: 'キリンXショルト',
+      leg: 'キリンXブーツ',
+    },
+    skills: ['属性攻撃強化', '最大数弾生産', 'ランナー', '全耐性+10'],
+    targetSkills: { '属性攻撃': 10, '弾調合': 10 },
+    description: 'ミラ祖龍素材の究極ライト。4属性弾すべてを速射できるため、弱点がバラバラな大連続狩猟でも弾切れ知らずで無類の強さを誇ります。',
+  },
+];
+
+export interface WeaponProgressionStep {
+  phase: '下位（村★1〜★6）' | '上位（村★7〜★9・集会上位）' | 'G級（G★1〜G★3・ウカム後）';
+  recommendedArmor: string;
+  recommendedWeapon: string;
+  keySkills: string[];
+  reason: string;
+  keyMaterials: string;
+  targetSkills: Record<string, number>;
+}
+
+export interface WeaponProgressionGuide {
+  weaponType: string;
+  roleDescription: string;
+  steps: WeaponProgressionStep[];
+}
+
+export const PROGRESSION_GUIDES: WeaponProgressionGuide[] = [
+  {
+    weaponType: '大剣',
+    roleDescription: '溜め3抜刀攻撃による一撃離脱が基本の重量級武器。抜刀術・集中・匠が三種の神器。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'バトル一式 → ザザミ/ガレオス → クック一式',
+        recommendedWeapon: 'バスターソード → 蛇剣【毒蛇】 → バスターブレイド',
+        keySkills: ['攻撃力UP【小】', '研ぎ師', '見切り'],
+        reason: '下位序盤はバトル一式で攻撃力を確保。中盤からは攻撃力が高く作りやすいクックやザザミに乗り換え、溜め斬りの基礎を身につけます。',
+        keyMaterials: 'マカライト鉱石、怪鳥の甲殻、盾蟹の甲殻',
+        targetSkills: { '攻撃': 10, '研ぎ師': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'デスギアS / リオソウルU / アカムト',
+        recommendedWeapon: 'ティガノアギト → 轟大剣【大虎】',
+        keySkills: ['斬れ味レベル+1', '高級耳栓', '見切り+2'],
+        reason: '上位で解放されるリオソウルUやデスギアSで切れ味と耳栓を確保。耳栓があれば咆哮中に安全に頭へ溜め3を叩き込めます。',
+        keyMaterials: '禍々しい布、蒼火竜の堅殻、覇竜の剛爪',
+        targetSkills: { '聴覚保護': 15, '達人': 15 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'マフモフX → ギザミX/金色・真 → カイザーX抜刀',
+        recommendedWeapon: '角王剣アーティラート / 轟大剣【王虎】',
+        keySkills: ['抜刀術', '集中', '斬れ味レベル+1'],
+        reason: 'G級ではMHP2G最強スキルの「抜刀術（会心+100%）」と「集中」が解禁。アーティラートと組み合わせれば別次元のダメージが出ます。',
+        keyMaterials: '金獅子の剛角、黒鎧竜の重殻、角竜の重甲',
+        targetSkills: { '抜刀': 10, '溜め短縮': 10, '匠': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: '太刀',
+    roleDescription: '広い攻撃範囲と気刃斬りによる圧倒的な手数が魅力。切れ味維持と会心・耳栓が相性抜群。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'クック一式 → ギザミ一式 → ガルルガフェイク複合',
+        recommendedWeapon: '鉄刀【神楽】 → 斬破刀',
+        keySkills: ['業物', '砥石使用高速化', '耳栓'],
+        reason: '下位の看板武器である「斬破刀」を作りつつ、切れ味消費が激しい太刀をギザミの「業物」「高速化」で強力にサポートします。',
+        keyMaterials: '電気袋、鎌蟹の甲殻、黒狼鳥の耳',
+        targetSkills: { '斬れ味': 10, '研ぎ師': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'ギザミS一式 / リオソウルU一式',
+        recommendedWeapon: '鬼神斬破刀 → 飛竜刀【楓】',
+        keySkills: ['業物', '見切り+2', '高級耳栓'],
+        reason: 'ギザミSの業物＋見切り、またはリオソウルUの高級耳栓＋見切りが鉄板。モンスターの咆哮をチャンスに変えて気刃大回転斬りを狙えます。',
+        keyMaterials: '鎌蟹の堅殻、蒼火竜の堅殻',
+        targetSkills: { '聴覚保護': 15, '達人': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ギザミZ一式 / ナルガX一式',
+        recommendedWeapon: 'ラストタキオン / 夜刀【月影】 / 鬼哭斬破刀・真打',
+        keySkills: ['斬れ味レベル+1', '業物', '回避性能+2'],
+        reason: 'G級中盤のギザミZ（匠・業物・見切り）が太刀のゴール装備。回避を重視するならナルガXでフレーム回避太刀として立ち回るのも強力。',
+        keyMaterials: '鎌蟹の重殻、迅竜の豪黒毛、黒龍の紅焔角',
+        targetSkills: { '匠': 10, '斬れ味': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: '双剣',
+    roleDescription: '乱舞による瞬間火力は全武器No.1。スタミナ管理（強走薬）と切れ味維持、属性強化が命。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'バトル一式 → ギザミ一式',
+        recommendedWeapon: 'デュアルトマホーク → インセクトオーダー',
+        keySkills: ['業物', '砥石使用高速化', '攻撃力UP'],
+        reason: '双剣は乱舞ですぐに緑ゲージが落ちるため、下位からギザミの業物・高速化が生命線となります。強走薬グレートの調合分も集めましょう。',
+        keyMaterials: '鎌蟹の甲殻、狂走エキス',
+        targetSkills: { '斬れ味': 10, '研ぎ師': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'ギザミS一式 / キリンS一式',
+        recommendedWeapon: '双聖剣ギルドナイト / 双影剣',
+        keySkills: ['業物', '属性攻撃強化', 'ランナー'],
+        reason: '手数の多さを活かすため属性双剣を揃え始めます。キリンSの属性攻撃強化やギザミSの切れ味キープで火力を持続。',
+        keyMaterials: 'キリンの蒼角、ギルドチケット',
+        targetSkills: { '属性攻撃': 10, '斬れ味': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ギザミZ一式 / キリンX一式',
+        recommendedWeapon: '双影剣G / コウリュウノツガイ / 双聖剣ギルドナイト',
+        keySkills: ['斬れ味レベル+1', '業物', '属性攻撃強化'],
+        reason: 'ギザミZの匠＋業物は双剣のためにあると言っても過言ではありません。弱点属性の双剣を担いで乱舞を叩き込みましょう。',
+        keyMaterials: 'キリンの特上皮、鎌蟹の重殻、火竜の天鱗',
+        targetSkills: { '匠': 10, '斬れ味': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: 'ハンマー',
+    roleDescription: '頭部への溜め攻撃でスタンを狙う打撃の王様。集中・匠・耳栓で弱点を叩き割る。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'タロス一式 → ガルルガフェイク複合',
+        recommendedWeapon: 'アイアンストライク → ウォーハンマー → ストライプストライク',
+        keySkills: ['高級耳栓', '見切り', '攻撃力UP'],
+        reason: 'ハンマーはガードができないため、耳栓があると咆哮中に頭部へ溜め3スタンプを入れ放題になり一気にスタンが取れます。',
+        keyMaterials: '黒狼鳥の耳、カンタロスの甲殻',
+        targetSkills: { '聴覚保護': 15 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'リオソウルU一式 / ギザミS一式',
+        recommendedWeapon: '轟鎚【虎頭】 → ジャガーノート',
+        keySkills: ['高級耳栓', '見切り+2', '攻撃力UP'],
+        reason: 'リオソウルUの高級耳栓＋見切りが安定感抜群。ジャガーノートなど鉱石素材の無属性高威力ハンマーを作れば上位は楽勝です。',
+        keyMaterials: 'ユニオン鉱石、蒼火竜の堅殻',
+        targetSkills: { '聴覚保護': 15, '達人': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: '金色・真一式 / ギザミZ一式',
+        recommendedWeapon: 'マグニチュード / カオスオーダー',
+        keySkills: ['斬れ味レベル+1', '集中', '見切り', '高級耳栓'],
+        reason: '攻撃力1612のマグニチュードや紫ゲージの長いカオスオーダーを担ぎ、匠と集中でスタンプを叩き込むのが至高の快感です。',
+        keyMaterials: '金獅子の剛角、角竜の重尾、黒鎧竜の重甲',
+        targetSkills: { '匠': 10, '溜め短縮': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: 'ランス',
+    roleDescription: '鉄壁のガードまたはステップ回避で張り付き続ける精密攻撃武器。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'ザザミ一式 → スカルS/ギザミ複合',
+        recommendedWeapon: 'ナイトランス → パラディンランス → バーバリアンタスク',
+        keySkills: ['ガード性能+1', 'ガード強化', '防御力UP'],
+        reason: '下位はザザミ一式で「ガード性能」を発動させるのが最も安全。敵の攻撃を受け止めながらチクチク反撃する基本をマスター。',
+        keyMaterials: '盾蟹の甲殻、真珠色の柔皮',
+        targetSkills: { 'ガード性能': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'ザザミS一式 / オウビートS一式',
+        recommendedWeapon: '角槍ディオスゲイル → エメラルドスピア',
+        keySkills: ['ガード性能+2', '回避性能+2'],
+        reason: 'ガードスタイルならザザミS、回避ランスに挑戦するならオウビートSやパピメルSの回避性能+2が非常に快適です。',
+        keyMaterials: 'オオツノアゲハ、盾蟹の堅殻',
+        targetSkills: { 'ガード性能': 15, '回避性能': 15 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ナルガX一式 / ザザミZ一式',
+        recommendedWeapon: '暗黒槍【暗夜】 / レイジングテペペ',
+        keySkills: ['回避性能+2', '回避距離UP', 'ガード性能+2'],
+        reason: 'ナルガXの回避性能+2と回避距離UPで、攻撃をすべてステップでいなして弱点を突き続ける「回避ランス」が完成します。',
+        keyMaterials: '迅竜の豪黒毛、盾蟹の重殻',
+        targetSkills: { '回避性能': 15, '回避距離': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: 'ガンランス',
+    roleDescription: '肉質無視の砲撃とガード突きを併せ持つ要塞。砲術王とガード性能で堅実に削る。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'ザザミ一式 / バトル一式',
+        recommendedWeapon: 'アイアンガンランス → ホワイトキャノン',
+        keySkills: ['ガード性能+1', '砲術師', '研ぎ師'],
+        reason: 'ザザミのガード性能をベースに、装飾品で砲術師を発動。硬いバサルモスやグラビモスも砲撃なら肉質無視で楽々破壊可能。',
+        keyMaterials: '盾蟹の甲殻、マカライト鉱石',
+        targetSkills: { 'ガード性能': 10, '砲術': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'グラビドS一式 / ザザミS一式',
+        recommendedWeapon: 'ナナ＝フレア → ガンチャリオット',
+        keySkills: ['ガード性能+1', 'ガード強化', '砲術王'],
+        reason: 'グラビモスのビームやガス攻撃もガード強化があれば全てガード可能。竜撃砲の威力を高める砲術王も上位で目指せます。',
+        keyMaterials: '鎧竜の堅殻、火竜の延髄',
+        targetSkills: { 'ガード性能': 10, '砲術': 15 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ギザミZ / ザザミZ / ガンキン系複合',
+        recommendedWeapon: '大砲モロコシ / 夜銃槍【残月】',
+        keySkills: ['砲術王', 'ガード性能+1', '業物', '装填数UP'],
+        reason: '拡散型LV5の大砲モロコシで砲術王砲撃を撃つ戦法は、G級の硬いモンスターや古龍すら安全地帯から封殺できます。',
+        keyMaterials: 'オオモロコシ、オオツノアゲハ、鎌蟹の重殻',
+        targetSkills: { '砲術': 15, 'ガード性能': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: '狩猟笛',
+    roleDescription: '自分強化による全武器最速の移動速度と、スタミナ無限・攻撃UP等の旋律が強力。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'ボーン一式 → ランポス/ギザミ一式',
+        recommendedWeapon: 'ボーンホルン → ソニックビードル',
+        keySkills: ['笛吹き名人', 'KO術', '攻撃力UP'],
+        reason: 'ボーン一式で発動する「笛吹き名人」は効果時間を延ばす必須スキル。自分強化の移動速度UPで快適に立ち回れます。',
+        keyMaterials: '竜骨【小】、鳴き袋',
+        targetSkills: { '笛': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'ギザミS一式 / リオソウルU一式',
+        recommendedWeapon: 'ブラッドホルン → サクラノリコーダー',
+        keySkills: ['笛吹き名人', '業物', '高級耳栓'],
+        reason: '手数の多さと弾かれ無効を活かしてスタンと疲労を狙います。ギザミSで切れ味を補強しつつ装飾品で笛吹き名人を追加。',
+        keyMaterials: '鎌蟹の堅殻、フルフル素材',
+        targetSkills: { '笛': 10, '斬れ味': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ナルガX一式 / ギザミZ一式',
+        recommendedWeapon: 'マギアチャーム＝ベル / ヴォルカニックギグ',
+        keySkills: ['笛吹き名人', '回避性能+2', '回避距離UP', '斬れ味レベル+1'],
+        reason: 'ナルガXの回避性能を活かした「回避笛」が安定度抜群。攻撃力強化【大】が吹けるマギアチャーム＝ベルでPTにも大貢献。',
+        keyMaterials: '迅竜の豪黒毛、鎌蟹の重殻',
+        targetSkills: { '笛': 10, '回避性能': 15 },
+      },
+    ],
+  },
+  {
+    weaponType: '片手剣',
+    roleDescription: '武器出し状態でのアイテム使用と素早い手数、属性・状態異常付与のエキスパート。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'バトル一式 → デスギア一式',
+        recommendedWeapon: 'ハンターナイフ → ポイズンタバルジン → ハイドラナイフ',
+        keySkills: ['状態異常攻撃強化', '砥石使用高速化', '心眼'],
+        reason: '毒属性のポイズンタバルジンを作れば下位の大型モンスターは全て毒殺可能。デスギアで心眼がつくと弾かれず快適。',
+        keyMaterials: '毒袋、ゲリョス素材、禍々しい布',
+        targetSkills: { '特殊攻撃': 10, '研ぎ師': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'オウビートS / リオソウルU一式',
+        recommendedWeapon: 'デスパライズ → コロナ → オデッセイブレイド',
+        keySkills: ['状態異常攻撃強化', '高級耳栓', '回避性能+1'],
+        reason: '麻痺片手のデスパライズでマルチ・ソロ問わず拘束。各種弱点属性の片手剣を相手に合わせて使い分けるのが醍醐味です。',
+        keyMaterials: '麻痺袋、ドスゲネポス素材',
+        targetSkills: { '特殊攻撃': 10, '聴覚保護': 15 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'キリンX一式 / ギザミZ一式',
+        recommendedWeapon: '雷神宝剣キリンG / ゴールドマロウ / 真・黒龍剣',
+        keySkills: ['属性攻撃強化', '斬れ味レベル+1', '業物'],
+        reason: '高い属性値を持つG級片手剣を、キリンXの属性攻撃強化やギザミZの匠・業物で極限まで引き出します。',
+        keyMaterials: 'キリンの特上皮、金火竜の秘棘、黒龍の剛翼',
+        targetSkills: { '属性攻撃': 10, '匠': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: 'ライトボウガン',
+    roleDescription: '速射による圧倒的な手数と身軽な機動性。属性弾速射や状態異常サポートが得意。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'バトルレジスト → ガノスレジスト一式',
+        recommendedWeapon: 'クロッセルボウガン → ショッカーボウガン',
+        keySkills: ['通常弾強化', 'ランナー', '攻撃力UP'],
+        reason: '通常弾LV2をメインに弱点部位を狙撃。ガノス一式のランナーで距離を保ちながら安全に撃ち続けます。',
+        keyMaterials: '水竜のヒレ、マカライト鉱石',
+        targetSkills: { '通常弾強化': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'キリンS一式 / リオソウルUレジスト',
+        recommendedWeapon: 'サンドフォール → ウラナイランプ → 銘火竜弩',
+        keySkills: ['属性攻撃強化', '通常弾・連射矢威力UP', '高級耳栓'],
+        reason: '火炎弾速射の銘火竜弩や水冷弾速射のサンドフォールが解禁。キリンSの属性攻撃強化をつければ上位大型敵も瞬殺。',
+        keyMaterials: 'キリンの蒼角、火竜の延髄',
+        targetSkills: { '属性攻撃': 10, '通常弾強化': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'キリンX一式 / ナルガX一式',
+        recommendedWeapon: '阿武祖龍弩 / 幻獣筒【三ツ角】',
+        keySkills: ['属性攻撃強化', '最大数弾生産', '回避距離UP', '連発数+1'],
+        reason: '全属性速射の阿武祖龍弩でキリンXを着るのがライトボウガンの極地。通常弾5速射の幻獣筒も単体狩猟で大暴れします。',
+        keyMaterials: '祖龍の剛翼、キリンの特上皮',
+        targetSkills: { '属性攻撃': 10, '弾調合': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: 'ヘビィボウガン',
+    roleDescription: '圧倒的な重火力砲台。貫通弾・通常弾・自動装填を駆使してモンスターをハメ殺す。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'コンガ一式 → ガノス一式 → クック一式',
+        recommendedWeapon: 'メテオバスター → バスティンディアーカ',
+        keySkills: ['通常弾強化', '反動軽減', '最大数弾生産'],
+        reason: 'シールドをつけて安全に通常弾LV2を撃ち込みます。弱点に当たったときの破壊力は下位から群を抜いています。',
+        keyMaterials: '桃毛獣の毛、水竜の鱗',
+        targetSkills: { '通常弾強化': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'ナルガS一式 / レウスS一式',
+        recommendedWeapon: 'ヒドゥンスナイパー → ディスティローア',
+        keySkills: ['回避距離UP', '貫通弾・貫通矢威力UP', '攻撃力UP'],
+        reason: 'ヘビィに必須と言われる「回避距離UP」をナルガSで確保。転がり移動でモンスターの攻撃範囲外へスムーズに離脱できます。',
+        keyMaterials: '迅竜の黒毛、火竜の堅殻',
+        targetSkills: { '回避距離': 10, '貫通弾強化': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ナルガX/ギザミZ複合 → ラツマツ自動装填',
+        recommendedWeapon: '夜砲【黒風】 / 老山龍砲・極',
+        keySkills: ['貫通弾強化', '自動装填', '最大数弾生産', '回避距離UP'],
+        reason: '貫通ヘビィの頂点「夜砲【黒風】」と、リロードなし属性乱射の「老山龍砲・極」の2強が君臨。ソロでも全クエスト0分針〜5分針が可能。',
+        keyMaterials: '迅竜の豪黒毛、老山龍の厚鱗',
+        targetSkills: { '貫通弾強化': 10, '自動装填': 10 },
+      },
+    ],
+  },
+  {
+    weaponType: '弓',
+    roleDescription: 'スタミナとクリティカル距離を維持して弱点を射抜く中距離射撃手。集中と矢強化が必須。',
+    steps: [
+      {
+        phase: '下位（村★1〜★6）',
+        recommendedArmor: 'マフモフ → ガノス一式 → ゲリョス一式',
+        recommendedWeapon: 'ハンターボウ → クイーンブラスター → 鳥幣弓',
+        keySkills: ['ランナー', '通常弾・連射矢威力UP'],
+        reason: '弓は溜め中のスタミナ消費が激しいため、ガノスやゲリョスの「ランナー」があると立ち回りが格段に楽になります。',
+        keyMaterials: '水竜のヒレ、ゴム質の皮',
+        targetSkills: { '強走': 10 },
+      },
+      {
+        phase: '上位（村★7〜★9・集会上位）',
+        recommendedArmor: 'マカルパS一式 / リオソウルU一式',
+        recommendedWeapon: 'ティガアロー → プロミネンスボウ',
+        keySkills: ['集中', '通常弾・連射矢威力UP', '高級耳栓'],
+        reason: '上位で「集中（溜め短縮）」が解禁され、弓の手数と火力が飛躍的に向上。弱点属性の連射弓を使い分けると強力です。',
+        keyMaterials: '春夜鯉、蒼火竜の堅殻',
+        targetSkills: { '溜め短縮': 10, '通常弾強化': 10 },
+      },
+      {
+        phase: 'G級（G★1〜G★3・ウカム後）',
+        recommendedArmor: 'ラヴァX一式 / 黒子・真一式',
+        recommendedWeapon: '殲滅と破壊の剛弓 / 龍弓【天崩】 / 角王弓ゲイルホーン',
+        keySkills: ['集中', '通常弾強化 / 散弾強化', '根性', 'ランナー'],
+        reason: 'ラヴァXで「集中」と「根性」を両立した連射・拡散弓が超安定。天崩の拡散矢強化でウカムルバスを数分で葬れます。',
+        keyMaterials: '溶岩竜の重殻、黒蝕の厚鱗',
+        targetSkills: { '溜め短縮': 10, '根性': 10 },
+      },
+    ],
+  },
+];

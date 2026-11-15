@@ -5,8 +5,9 @@ import { ConditionSettings } from './components/ConditionSettings';
 import { SkillSelector } from './components/SkillSelector';
 import { ArmorFilters } from './components/ArmorFilters';
 import { SearchResults } from './components/SearchResults';
-import { PresetsModal } from './components/PresetsModal';
 import { FavoritesModal } from './components/FavoritesModal';
+import { TemplateArmorsModal } from './components/TemplateArmorsModal';
+import { ProgressionGuideModal } from './components/ProgressionGuideModal';
 import { Toast } from './components/Toast';
 import { useSimulator } from './hooks/useSimulator';
 import { useConditionState } from './hooks/useConditionState';
@@ -46,7 +47,6 @@ export const App: React.FC = () => {
     handleRemoveSkill,
     handleChangePoints,
     handleReset,
-    handleApplyPreset,
     handleApplyCondition,
     getShareUrl,
     persistCondition,
@@ -67,7 +67,8 @@ export const App: React.FC = () => {
   // Favorites state
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
-  const [isPresetsOpen, setIsPresetsOpen] = useState(false);
+  const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
+  const [isProgressionGuideOpen, setIsProgressionGuideOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'defense' | 'slots'>('defense');
 
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -129,11 +130,25 @@ export const App: React.FC = () => {
     showToast('構成共有URLをクリップボードにコピーしました！');
   };
 
+  const handleApplyTemplateSkills = (skills: Record<string, number>, type: 'blade' | 'gunner') => {
+    setHunterType(type);
+    // Apply skills via condition helper
+    handleApplyCondition(
+      {
+        ...currentCondition,
+        hunterType: type,
+        targetSkills: skills,
+      },
+      'テンプレ装備スキル'
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#0d1117] text-[#e6edf3] pb-16">
       <Header
         onReset={handleFullReset}
-        onOpenPresets={() => setIsPresetsOpen(true)}
+        onOpenTemplates={() => setIsTemplatesOpen(true)}
+        onOpenProgressionGuide={() => setIsProgressionGuideOpen(true)}
         onOpenFavorites={() => setIsFavoritesOpen(true)}
         onShareUrl={handleShare}
         favoriteCount={favorites.length}
@@ -204,6 +219,7 @@ export const App: React.FC = () => {
         <SearchResults
           hasSearched={hasSearched}
           solutions={solutions}
+          hunterType={hunterType}
           simDuration={simDuration}
           totalChecked={totalChecked}
           sortBy={sortBy}
@@ -214,10 +230,16 @@ export const App: React.FC = () => {
         />
       </main>
 
-      <PresetsModal
-        isOpen={isPresetsOpen}
-        onClose={() => setIsPresetsOpen(false)}
-        onSelectPreset={handleApplyPreset}
+      <TemplateArmorsModal
+        isOpen={isTemplatesOpen}
+        onClose={() => setIsTemplatesOpen(false)}
+        onApplyTemplate={handleApplyTemplateSkills}
+      />
+
+      <ProgressionGuideModal
+        isOpen={isProgressionGuideOpen}
+        onClose={() => setIsProgressionGuideOpen(false)}
+        onApplySkills={handleApplyTemplateSkills}
       />
 
       <FavoritesModal

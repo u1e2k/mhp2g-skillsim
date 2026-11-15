@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
 import type { SimSolution } from '../types';
 import { formatSolutionForClipboard } from '../utils/formatResult';
-import { Copy, Check, Shield, Flame, Droplet, Zap, Snowflake, CircleDot, Sparkles, Star } from 'lucide-react';
+import { detectBadSkillsAndCounters } from '../utils/badSkills';
+import { BadSkillCountermeasures } from './BadSkillCountermeasures';
+import { RecommendedWeaponsModal } from './RecommendedWeaponsModal';
+import {
+  Copy,
+  Check,
+  Shield,
+  Flame,
+  Droplet,
+  Zap,
+  Snowflake,
+  CircleDot,
+  Sparkles,
+  Star,
+  Sword,
+  AlertTriangle,
+} from 'lucide-react';
 
 interface SolutionCardProps {
   solution: SimSolution;
   index: number;
+  hunterType?: 'blade' | 'gunner';
   isFavorited?: boolean;
   onToggleFavorite?: () => void;
 }
@@ -13,10 +30,12 @@ interface SolutionCardProps {
 export const SolutionCard: React.FC<SolutionCardProps> = ({
   solution,
   index,
+  hunterType = 'blade',
   isFavorited = false,
   onToggleFavorite,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [showWeaponsModal, setShowWeaponsModal] = useState(false);
 
   const handleCopy = () => {
     const text = formatSolutionForClipboard(solution);
@@ -24,6 +43,8 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const badSkillCounters = detectBadSkillsAndCounters(solution);
 
   const parts = [
     { label: '頭', armor: solution.head, decos: solution.decorations.head },
@@ -77,6 +98,17 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({
             </span>
           </div>
 
+          {/* Recommended Weapons Button */}
+          <button
+            type="button"
+            onClick={() => setShowWeaponsModal(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 hover:text-amber-200 border border-amber-500/30 text-xs font-semibold transition-all shadow-sm"
+            title="このスキル構成に合うおすすめ武器を表示"
+          >
+            <Sword className="w-3.5 h-3.5 text-amber-400" />
+            <span>おすすめ武器</span>
+          </button>
+
           {/* Favorite button */}
           {onToggleFavorite && (
             <button
@@ -119,20 +151,35 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({
       {/* Activated Skills */}
       <div className="flex flex-wrap gap-1.5 items-center">
         <span className="text-[11px] font-semibold text-gray-400 mr-1">発動スキル:</span>
-        {solution.activeSkills.map((s) => (
-          <span
-            key={s}
-            className="text-xs px-2 py-0.5 rounded-md bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-medium"
-          >
-            {s}
-          </span>
-        ))}
+        {solution.activeSkills.map((s) => {
+          const isBad = badSkillCounters.some((bc) => bc.skillName === s);
+          return (
+            <span
+              key={s}
+              className={`text-xs px-2 py-0.5 rounded-md font-medium border flex items-center gap-1 ${
+                isBad
+                  ? 'bg-red-950/60 border-red-500/50 text-red-300'
+                  : 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300'
+              }`}
+            >
+              {isBad && <AlertTriangle className="w-3 h-3 text-red-400" />}
+              {s}
+            </span>
+          );
+        })}
         {solution.remainingSlots.total > 0 && (
           <span className="text-xs px-2 py-0.5 rounded-md bg-blue-950/60 border border-blue-500/40 text-blue-300 font-mono">
             空き {solution.remainingSlots.total}スロ
           </span>
         )}
       </div>
+
+      {/* Bad Skill Countermeasures (if any) */}
+      {badSkillCounters.length > 0 && (
+        <BadSkillCountermeasures
+          counters={badSkillCounters}
+        />
+      )}
 
       {/* Armors & Decos Grid */}
       <div className="grid grid-cols-1 gap-1.5 bg-[#0d1117] p-2.5 rounded-lg border border-[#30363d]">
@@ -210,6 +257,14 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({
           </div>
         </div>
       )}
+
+      {/* Recommended Weapons Modal */}
+      <RecommendedWeaponsModal
+        isOpen={showWeaponsModal}
+        onClose={() => setShowWeaponsModal(false)}
+        solution={solution}
+        hunterType={hunterType}
+      />
     </div>
   );
 };
