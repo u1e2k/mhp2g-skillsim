@@ -21,6 +21,8 @@ import {
   saveFavorite,
   removeFavorite,
   isSolutionFavorited,
+  saveLastCondition,
+  getLastCondition,
   type FavoriteItem,
 } from './utils/storage';
 import { Search, Loader2, AlertCircle, ArrowUpDown, Check, Info } from 'lucide-react';
@@ -110,6 +112,9 @@ export const App: React.FC = () => {
       setIsSimulating(true);
       setErrorMsg(null);
 
+      // Save condition to localStorage
+      saveLastCondition(cond);
+
       const req: WorkerMessageRequest = {
         type: 'SIMULATE',
         condition: cond,
@@ -121,7 +126,7 @@ export const App: React.FC = () => {
     []
   );
 
-  // Restore condition from URL on initial load
+  // Restore condition from URL or localStorage on initial load
   useEffect(() => {
     const urlCond = parseConditionFromUrl();
     if (urlCond) {
@@ -131,13 +136,27 @@ export const App: React.FC = () => {
       if (urlCond.rankLimit) setRankLimit(urlCond.rankLimit);
       if (urlCond.targetSkills) setTargetSkills(urlCond.targetSkills);
       showToast('URLから装備条件を復元しました');
-    } else {
-      setTargetSkills({
-        '匠': 10,
-        '抜刀': 10,
-        '溜め短縮': 10,
-      });
+      return;
     }
+
+    const lastCond = getLastCondition();
+    if (lastCond) {
+      if (lastCond.hunterType) setHunterType(lastCond.hunterType);
+      if (lastCond.sex) setSex(lastCond.sex);
+      if (lastCond.weaponSlots !== undefined) setWeaponSlots(lastCond.weaponSlots);
+      if (lastCond.rankLimit) setRankLimit(lastCond.rankLimit);
+      if (lastCond.targetSkills) setTargetSkills(lastCond.targetSkills);
+      if (lastCond.pinnedArmors) setPinnedArmors(lastCond.pinnedArmors);
+      showToast('前回の検索条件を復元しました');
+      return;
+    }
+
+    // Default initial preset (抜刀アーティ)
+    setTargetSkills({
+      '匠': 10,
+      '抜刀': 10,
+      '溜め短縮': 10,
+    });
   }, []);
 
   // Auto-simulate on any condition changes (Debounced 250ms)

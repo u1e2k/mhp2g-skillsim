@@ -54,3 +54,24 @@ export function isSolutionFavorited(solution: SimSolution, favorites: FavoriteIt
       JSON.stringify(f.solution.decorations) === JSON.stringify(solution.decorations)
   );
 }
+
+const LAST_CONDITION_KEY = 'mhp2g_sim_last_condition_v1';
+
+export function saveLastCondition(condition: SimCondition): void {
+  try {
+    localStorage.setItem(LAST_CONDITION_KEY, JSON.stringify(condition));
+  } catch (err) {
+    console.error('Failed to save last condition to localStorage', err);
+  }
+}
+
+export function getLastCondition(): SimCondition | null {
+  try {
+    const raw = localStorage.getItem(LAST_CONDITION_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Failed to load last condition from localStorage', err);
+    return null;
+  }
+}
