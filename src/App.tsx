@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { SimSolution } from './types';
 import { Header } from './components/Header';
 import { ConditionSettings } from './components/ConditionSettings';
@@ -23,10 +23,10 @@ const MAX_SOLUTIONS_LIMIT = 100;
 
 export const App: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const showToast = (msg: string) => {
+  const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 2500);
-  };
+  }, []);
 
   // Conditions & State management hook
   const {
@@ -52,7 +52,7 @@ export const App: React.FC = () => {
     persistCondition,
   } = useConditionState(showToast);
 
-  // Simulator hook
+  // Simulator hook with direct fallback support
   const {
     isSimulating,
     solutions,
@@ -64,14 +64,13 @@ export const App: React.FC = () => {
     resetResults,
   } = useSimulator(MAX_SOLUTIONS_LIMIT);
 
-  // Favorites & Sort state
+  // Favorites state
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
   const [isPresetsOpen, setIsPresetsOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'defense' | 'slots'>('defense');
 
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isInitialMount = useRef(true);
 
   const refreshFavorites = () => setFavorites(getFavorites());
   useEffect(() => {
@@ -80,15 +79,6 @@ export const App: React.FC = () => {
 
   // Debounced Auto-simulation on condition change
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      if (Object.keys(targetSkills).length > 0) {
-        persistCondition(currentCondition);
-        executeSimulate(currentCondition);
-      }
-      return;
-    }
-
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
     }
@@ -96,18 +86,19 @@ export const App: React.FC = () => {
     debounceTimerRef.current = setTimeout(() => {
       persistCondition(currentCondition);
       executeSimulate(currentCondition);
-    }, 250);
+    }, 200);
 
     return () => {
-      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
     };
-  }, [currentCondition, executeSimulate, persistCondition, targetSkills]);
+  }, [currentCondition, executeSimulate, persistCondition]);
 
   // Handlers
   const handleFullReset = () => {
     handleReset();
     resetResults();
-    showToast('条件をリセットしました');
   };
 
   const handleToggleFavorite = (solution: SimSolution) => {
@@ -175,7 +166,7 @@ export const App: React.FC = () => {
           setPinnedArmors={setPinnedArmors}
         />
 
-        {/* Auto status & manual simulate trigger */}
+        {/* Status bar and manual trigger */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#161b22] p-3 rounded-xl border border-[#30363d]">
           <div className="flex items-center gap-2 text-xs text-gray-300">
             {isSimulating ? (
@@ -225,10 +216,7 @@ export const App: React.FC = () => {
       <PresetsModal
         isOpen={isPresetsOpen}
         onClose={() => setIsPresetsOpen(false)}
-        onSelectPreset={(preset) => {
-          handleApplyPreset(preset);
-          showToast(`テンプレ「${preset.name}」を読み込みました`);
-        }}
+        onSelectPreset={handleApplyPreset}
       />
 
       <FavoritesModal
@@ -236,10 +224,7 @@ export const App: React.FC = () => {
         onClose={() => setIsFavoritesOpen(false)}
         favorites={favorites}
         onFavoritesChange={refreshFavorites}
-        onSelectFavorite={(fav) => {
-          handleApplyCondition(fav.condition);
-          showToast(`お気に入り「${fav.name}」を読み込みました`);
-        }}
+        onSelectFavorite={(fav) => handleApplyCondition(fav.condition, fav.name)}
         onShowToast={showToast}
       />
 
