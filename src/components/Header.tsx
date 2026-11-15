@@ -1,13 +1,21 @@
 import React from 'react';
-import { Sparkles, RotateCcw, Share2 } from 'lucide-react';
+import { Sparkles, RotateCcw, Share2, Star } from 'lucide-react';
 
 interface HeaderProps {
   onReset: () => void;
   onOpenPresets: () => void;
+  onOpenFavorites: () => void;
   onShareUrl: () => void;
+  favoriteCount: number;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onReset, onOpenPresets, onShareUrl }) => {
+export const Header: React.FC<HeaderProps> = ({
+  onReset,
+  onOpenPresets,
+  onOpenFavorites,
+  onShareUrl,
+  favoriteCount,
+}) => {
   return (
     <header className="border-b border-[#30363d] bg-[#161b22]/90 backdrop-blur-md sticky top-0 z-40 px-4 py-3">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -31,6 +39,22 @@ export const Header: React.FC<HeaderProps> = ({ onReset, onOpenPresets, onShareU
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Favorites Button */}
+          <button
+            onClick={onOpenFavorites}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-amber-300 text-xs font-medium border border-[#30363d] transition-colors relative"
+            title="お気に入り装備一覧"
+          >
+            <Star className={`w-3.5 h-3.5 ${favoriteCount > 0 ? 'fill-amber-400 text-amber-400' : 'text-gray-400'}`} />
+            <span className="hidden sm:inline">お気に入り</span>
+            {favoriteCount > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-gray-950 font-bold text-[10px]">
+                {favoriteCount}
+              </span>
+            )}
+          </button>
+
+          {/* Presets Button */}
           <button
             onClick={onOpenPresets}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-medium border border-amber-500/30 transition-colors"
@@ -40,6 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ onReset, onOpenPresets, onShareU
             <span className="hidden sm:inline">定番テンプレ</span>
           </button>
 
+          {/* Share URL Button */}
           <button
             onClick={onShareUrl}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-gray-200 text-xs font-medium border border-[#30363d] transition-colors"
@@ -49,6 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ onReset, onOpenPresets, onShareU
             <span className="hidden sm:inline">共有</span>
           </button>
 
+          {/* Reset Button */}
           <button
             onClick={onReset}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-gray-300 hover:text-white text-xs font-medium border border-[#30363d] transition-colors"

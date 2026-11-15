@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import type { SimSolution } from '../types';
 import { formatSolutionForClipboard } from '../utils/formatResult';
-import { Copy, Check, Shield, Flame, Droplet, Zap, Snowflake, CircleDot, Sparkles } from 'lucide-react';
+import { Copy, Check, Shield, Flame, Droplet, Zap, Snowflake, CircleDot, Sparkles, Star } from 'lucide-react';
 
 interface SolutionCardProps {
   solution: SimSolution;
   index: number;
+  isFavorited?: boolean;
+  onToggleFavorite?: () => void;
 }
 
-export const SolutionCard: React.FC<SolutionCardProps> = ({ solution, index }) => {
+export const SolutionCard: React.FC<SolutionCardProps> = ({
+  solution,
+  index,
+  isFavorited = false,
+  onToggleFavorite,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -28,7 +35,7 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({ solution, index }) =
 
   return (
     <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4 shadow-md hover:border-gray-500 transition-all flex flex-col gap-3">
-      {/* Card Header: Rank, Defense, Resistances, Copy Button */}
+      {/* Card Header: Rank, Defense, Resistances, Copy Button, Favorite Button */}
       <div className="flex items-center justify-between flex-wrap gap-2 pb-2.5 border-b border-[#30363d]">
         <div className="flex items-center gap-2">
           <span className="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
@@ -45,33 +52,53 @@ export const SolutionCard: React.FC<SolutionCardProps> = ({ solution, index }) =
           )}
         </div>
 
-        {/* Resistances */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="flex items-center gap-0.5 text-red-400" title="火耐性">
-            <Flame className="w-3 h-3" />
-            {solution.resistances.fire}
-          </span>
-          <span className="flex items-center gap-0.5 text-blue-400" title="水耐性">
-            <Droplet className="w-3 h-3" />
-            {solution.resistances.water}
-          </span>
-          <span className="flex items-center gap-0.5 text-yellow-400" title="雷耐性">
-            <Zap className="w-3 h-3" />
-            {solution.resistances.thunder}
-          </span>
-          <span className="flex items-center gap-0.5 text-cyan-400" title="氷耐性">
-            <Snowflake className="w-3 h-3" />
-            {solution.resistances.ice}
-          </span>
-          <span className="flex items-center gap-0.5 text-purple-400" title="龍耐性">
-            <CircleDot className="w-3 h-3" />
-            {solution.resistances.dragon}
-          </span>
+        {/* Resistances & Actions */}
+        <div className="flex items-center gap-2 text-xs flex-wrap">
+          <div className="flex items-center gap-1.5 mr-1">
+            <span className="flex items-center gap-0.5 text-red-400" title="火耐性">
+              <Flame className="w-3 h-3" />
+              {solution.resistances.fire}
+            </span>
+            <span className="flex items-center gap-0.5 text-blue-400" title="水耐性">
+              <Droplet className="w-3 h-3" />
+              {solution.resistances.water}
+            </span>
+            <span className="flex items-center gap-0.5 text-yellow-400" title="雷耐性">
+              <Zap className="w-3 h-3" />
+              {solution.resistances.thunder}
+            </span>
+            <span className="flex items-center gap-0.5 text-cyan-400" title="氷耐性">
+              <Snowflake className="w-3 h-3" />
+              {solution.resistances.ice}
+            </span>
+            <span className="flex items-center gap-0.5 text-purple-400" title="龍耐性">
+              <CircleDot className="w-3 h-3" />
+              {solution.resistances.dragon}
+            </span>
+          </div>
 
+          {/* Favorite button */}
+          {onToggleFavorite && (
+            <button
+              type="button"
+              onClick={onToggleFavorite}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-all ${
+                isFavorited
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  : 'bg-[#21262d] hover:bg-[#30363d] text-gray-300 hover:text-white border-[#30363d]'
+              }`}
+              title={isFavorited ? 'お気に入りから解除' : 'お気に入りに追加'}
+            >
+              <Star className={`w-3.5 h-3.5 ${isFavorited ? 'fill-amber-400 text-amber-400' : 'text-gray-400'}`} />
+              <span className="hidden sm:inline">{isFavorited ? '保存済' : 'お気に入り'}</span>
+            </button>
+          )}
+
+          {/* Copy button */}
           <button
             type="button"
             onClick={handleCopy}
-            className="flex items-center gap-1 ml-2 px-2.5 py-1 rounded bg-[#21262d] hover:bg-[#30363d] text-gray-200 hover:text-white border border-[#30363d] text-xs font-medium transition-all"
+            className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#21262d] hover:bg-[#30363d] text-gray-200 hover:text-white border border-[#30363d] text-xs font-medium transition-all"
             title="構成テキストをコピー"
           >
             {copied ? (
