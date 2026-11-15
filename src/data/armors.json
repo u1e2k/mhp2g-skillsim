@@ -2090,7 +2090,7 @@
     "name": "忍の面・陽",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -2114,7 +2114,7 @@
     "name": "忍の面・陰",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -2798,7 +2798,7 @@
     "name": "キリンホーン",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 44,
     "resistances": {
       "fire": 0,
@@ -2822,7 +2822,7 @@
     "name": "キリンコルノ",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 22,
     "resistances": {
       "fire": 1,
@@ -5801,7 +5801,7 @@
     "name": "忍の面・天",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -5824,7 +5824,7 @@
     "name": "忍の面・地",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -6409,7 +6409,7 @@
     "name": "キリンSホーン",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 66,
     "resistances": {
       "fire": 0,
@@ -6432,7 +6432,7 @@
     "name": "キリンSコルノ",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 32,
     "resistances": {
       "fire": 1,
@@ -6758,7 +6758,7 @@
     "name": "忍の面・空",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -6781,7 +6781,7 @@
     "name": "忍の面・海",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -8892,7 +8892,7 @@
   },
   {
     "id": "head_381",
-    "name": "ハピメルXテスタ",
+    "name": "パピメルXテスタ",
     "part": "head",
     "hunterType": "both",
     "sex": "female",
@@ -9063,7 +9063,7 @@
     "name": "キリンXホーン",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 96,
     "resistances": {
       "fire": 0,
@@ -9087,7 +9087,7 @@
     "name": "キリンXコルノ",
     "part": "head",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 48,
     "resistances": {
       "fire": 1,
@@ -11812,7 +11812,7 @@
     "name": "忍の装束・陽",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -11836,7 +11836,7 @@
     "name": "忍の装束・陰",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -15537,7 +15537,7 @@
     "name": "忍の装束・天",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -15560,7 +15560,7 @@
     "name": "忍の装束・地",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -16499,7 +16499,7 @@
     "name": "忍の装束・空",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -16522,7 +16522,7 @@
     "name": "忍の装束・海",
     "part": "body",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -21511,7 +21511,7 @@
     "name": "忍の篭手・陽",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -21535,7 +21535,7 @@
     "name": "忍の篭手・陰",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -25151,7 +25151,7 @@
     "name": "忍の篭手・天",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -25174,7 +25174,7 @@
     "name": "忍の篭手・地",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -26087,7 +26087,7 @@
     "name": "忍の篭手・空",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -26110,7 +26110,7 @@
     "name": "忍の篭手・海",
     "part": "arm",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -30956,7 +30956,7 @@
     "name": "忍の帯・陽",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -30980,7 +30980,7 @@
     "name": "忍の帯・陰",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -34565,7 +34565,7 @@
     "name": "忍の帯・天",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -34588,7 +34588,7 @@
     "name": "忍の帯・地",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -35524,7 +35524,7 @@
     "name": "忍の帯・空",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -35547,7 +35547,7 @@
     "name": "忍の帯・海",
     "part": "waist",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -40518,7 +40518,7 @@
     "name": "忍の足袋・陽",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -40542,7 +40542,7 @@
     "name": "忍の足袋・陰",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 20,
     "resistances": {
       "fire": 2,
@@ -44198,7 +44198,7 @@
     "name": "忍の足袋・天",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -44221,7 +44221,7 @@
     "name": "忍の足袋・地",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "male",
     "defense": 30,
     "resistances": {
       "fire": 2,
@@ -45134,7 +45134,7 @@
     "name": "忍の足袋・空",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,
@@ -45157,7 +45157,7 @@
     "name": "忍の足袋・海",
     "part": "leg",
     "hunterType": "both",
-    "sex": "all",
+    "sex": "female",
     "defense": 28,
     "resistances": {
       "fire": 2,

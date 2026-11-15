@@ -77,6 +77,13 @@ export function solveSim(
 
     const groups = new Map<string, EquivalenceClass>();
 
+    const getArmorPriority = (a: Armor): number => {
+      let p = 0;
+      if (a.sex === condition.sex) p += 10;
+      if (a.hunterType === condition.hunterType) p += 2;
+      return p;
+    };
+
     for (const a of armorsOfPart) {
       const skillVals = targetTrees.map((t) => a.skills[t] ?? 0).join(',');
       const key = `${a.torsoUp ? 1 : 0}_${a.slots}_${skillVals}`;
@@ -97,13 +104,21 @@ export function solveSim(
         groups.set(key, group);
       }
       group.armors.push(a);
-      if (a.defense > group.bestArmor.defense) {
+
+      const isBetter =
+        a.defense > group.bestArmor.defense ||
+        (a.defense === group.bestArmor.defense && getArmorPriority(a) > getArmorPriority(group.bestArmor));
+
+      if (isBetter) {
         group.bestArmor = a;
       }
     }
 
     for (const group of groups.values()) {
-      group.armors.sort((a, b) => b.defense - a.defense);
+      group.armors.sort((a, b) => {
+        if (b.defense !== a.defense) return b.defense - a.defense;
+        return getArmorPriority(b) - getArmorPriority(a);
+      });
       equivClasses[part].push(group);
     }
   }

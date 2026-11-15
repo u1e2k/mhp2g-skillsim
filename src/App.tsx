@@ -152,6 +152,7 @@ export const App: React.FC = () => {
         />
 
         <SkillSelector
+          hunterType={hunterType}
           selectedSkills={targetSkills}
           onAddSkill={handleAddSkill}
           onRemoveSkill={handleRemoveSkill}

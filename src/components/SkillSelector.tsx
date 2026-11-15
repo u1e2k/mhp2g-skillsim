@@ -1,23 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import skillsData from '../data/skills.json';
-import type { SkillTree } from '../types';
+import type { SkillTree, HunterType } from '../types';
 import { matchSkillTree } from '../utils/skillSearch';
 import { Search, Plus, X, Check, Sparkles } from 'lucide-react';
 
 const allSkillsMap = skillsData as unknown as Record<string, SkillTree>;
 const allSkillTrees = Object.values(allSkillsMap);
 
-const CATEGORIES = [
-  'すべて',
-  '攻撃系',
-  '剣士系',
-  'ガンナー系',
-  '防御系',
-  'ステータス系',
-  'アイテム・マップ系',
-];
-
-const QUICK_SKILLS = [
+const BLADE_QUICK_SKILLS = [
   { tree: '匠', label: '斬れ味レベル+1 (+10)', points: 10 },
   { tree: '抜刀', label: '抜刀術 (+10)', points: 10 },
   { tree: '溜め短縮', label: '集中 (+10)', points: 10 },
@@ -25,12 +15,29 @@ const QUICK_SKILLS = [
   { tree: '聴覚保護', label: '高級耳栓 (+15)', points: 15 },
   { tree: '達人', label: '見切り+2 (+15)', points: 15 },
   { tree: '攻撃', label: '攻撃力UP【大】 (+20)', points: 20 },
-  { tree: '回避性能', label: '回避性能+2 (+15)', points: 15 },
-  { tree: '自動装填', label: '自動装填 (+10)', points: 10 },
   { tree: '研ぎ師', label: '砥石使用高速化 (+10)', points: 10 },
+  { tree: '回避性能', label: '回避性能+2 (+15)', points: 15 },
+  { tree: 'ガード性能', label: 'ガード性能+1 (+10)', points: 10 },
+];
+
+const GUNNER_QUICK_SKILLS = [
+  { tree: '通常弾強化', label: '通常弾・連射矢威力UP (+10)', points: 10 },
+  { tree: '貫通弾強化', label: '貫通弾・貫通矢威力UP (+10)', points: 10 },
+  { tree: '散弾強化', label: '散弾・拡散矢威力UP (+10)', points: 10 },
+  { tree: '自動装填', label: '自動装填 (+10)', points: 10 },
+  { tree: '装填数', label: '装填数UP (+10)', points: 10 },
+  { tree: '反動', label: '反動軽減+2 (+15)', points: 15 },
+  { tree: '装填', label: '装填速度+2 (+15)', points: 15 },
+  { tree: '属性攻撃', label: '属性攻撃強化 (+10)', points: 10 },
+  { tree: '聴覚保護', label: '高級耳栓 (+15)', points: 15 },
+  { tree: '弾調合', label: '最大数弾生産 (+10)', points: 10 },
+  { tree: '根性', label: '根性 (+10)', points: 10 },
+  { tree: '回避距離', label: '回避距離UP (+10)', points: 10 },
+  { tree: '回避性能', label: '回避性能+2 (+15)', points: 15 },
 ];
 
 interface SkillSelectorProps {
+  hunterType: HunterType;
   selectedSkills: Record<string, number>;
   onAddSkill: (tree: string, points: number) => void;
   onRemoveSkill: (tree: string) => void;
@@ -38,22 +45,58 @@ interface SkillSelectorProps {
 }
 
 export const SkillSelector: React.FC<SkillSelectorProps> = ({
+  hunterType,
   selectedSkills,
   onAddSkill,
   onRemoveSkill,
   onChangePoints,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('すべて');
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    hunterType === 'gunner' ? 'ガンナー系' : '剣士系'
+  );
+
+  // Automatically update category filter when hunter type changes
+  useEffect(() => {
+    if (hunterType === 'gunner') {
+      setSelectedCategory('ガンナー系');
+    } else {
+      setSelectedCategory('剣士系');
+    }
+  }, [hunterType]);
+
+  const categories = useMemo(() => {
+    if (hunterType === 'gunner') {
+      return ['ガンナー系', 'すべて', '攻撃系', 'ステータス系', '防御系', 'アイテム・マップ系', '剣士系'];
+    }
+    return ['剣士系', 'すべて', '攻撃系', '防御系', 'ステータス系', 'アイテム・マップ系', 'ガンナー系'];
+  }, [hunterType]);
+
+  const quickSkills = useMemo(() => {
+    return hunterType === 'gunner' ? GUNNER_QUICK_SKILLS : BLADE_QUICK_SKILLS;
+  }, [hunterType]);
 
   const filteredTrees = useMemo(() => {
     return allSkillTrees.filter((tree) => {
-      if (selectedCategory !== 'すべて' && tree.category !== selectedCategory) {
+      // If user typed a search query, search broadly
+      if (searchQuery.trim()) {
+        return matchSkillTree(tree, searchQuery);
+      }
+
+      // Hide opposite type skills when in "すべて" mode to keep view clean
+      if (selectedCategory === 'すべて') {
+        if (hunterType === 'gunner' && tree.category === '剣士系') return false;
+        if (hunterType === 'blade' && tree.category === 'ガンナー系') return false;
+        return true;
+      }
+
+      if (tree.category !== selectedCategory) {
         return false;
       }
+
       return matchSkillTree(tree, searchQuery);
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, hunterType]);
 
   const selectedCount = Object.keys(selectedSkills).length;
 
@@ -128,10 +171,10 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
       <div>
         <div className="text-[11px] font-semibold text-gray-400 mb-1.5 flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-amber-400" />
-          人気・定番スキル（クイック追加）
+          人気・定番スキル（{hunterType === 'gunner' ? 'ガンナー' : '剣士'}クイック追加）
         </div>
         <div className="flex flex-wrap gap-1.5">
-          {QUICK_SKILLS.map((qs) => {
+          {quickSkills.map((qs) => {
             const isSelected = selectedSkills[qs.tree] !== undefined;
             return (
               <button
@@ -181,7 +224,7 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
 
         {/* Categories */}
         <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-none">
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               type="button"

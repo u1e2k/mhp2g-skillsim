@@ -246,6 +246,7 @@ def build_armors(skill_trees):
                 name = row[name_idx].strip()
                 if not name:
                     continue
+                name = name.replace("ハピメル", "パピメル")
 
                 type_str = row[type_idx].strip() if type_idx != -1 and type_idx < len(row) else "剣/ガ"
                 hunter_type = "both"
@@ -262,6 +263,39 @@ def build_armors(skill_trees):
                     sex = "male"
                 elif sex_str == "女":
                     sex = "female"
+                else:
+                    # Name-based gender determination for armors where Wiki omitted the gender column
+                    if any(k in name for k in ['キリンホーン', 'キリンSホーン', 'キリンXホーン']):
+                        sex = "male"
+                    elif any(k in name for k in ['キリンコルノ', 'キリンSコルノ', 'キリンXコルノ']):
+                        sex = "female"
+                    elif '忍の' in name:
+                        if any(k in name for k in ['・陽', '・天', '・地']):
+                            sex = "male"
+                        elif any(k in name for k in ['・陰', '・空', '・海']):
+                            sex = "female"
+                    elif 'プリースト' in name:
+                        sex = "male"
+                    elif 'シスター' in name:
+                        sex = "female"
+                    elif 'パティシエ' in name:
+                        sex = "female"
+                    elif 'オウビート' in name:
+                        sex = "male"
+                    elif 'パピメル' in name:
+                        sex = "female"
+                    elif 'ギルドナイト' in name:
+                        sex = "male"
+                    elif 'メイド' in name:
+                        sex = "female"
+                    elif '暁丸' in name:
+                        sex = "male"
+                    elif '凛' in name:
+                        sex = "female"
+                    elif '曙丸' in name:
+                        sex = "male"
+                    elif '艶' in name:
+                        sex = "female"
 
                 # defense
                 def_str = row[def_idx].strip() if def_idx != -1 and def_idx < len(row) else "0"
